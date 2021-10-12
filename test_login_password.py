@@ -24,4 +24,3 @@ def test_login(driver):
     driver.find_element_by_name("login").click()
     # check page
     WebDriverWait(driver, 10).until(EC.url_contains("http://localhost/litecart/admin/"))
-
