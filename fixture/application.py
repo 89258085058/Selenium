@@ -1,6 +1,6 @@
-
 from fixture.admin import AdminHelper
 from fixture.session import SessionHelper
+from fixture.sticker import StickerHelper
 from selenium import webdriver
 
 
@@ -20,6 +20,7 @@ class Application:
         self.wd.implicitly_wait(5)
         self.session = SessionHelper(self)
         self.admin = AdminHelper(self)
+        self.sticker = StickerHelper(self)
         self.base_url = base_url
 
 

@@ -1,8 +1,8 @@
 {
  "web": {
 
-   "baseUrl":"http://localhost/litecart/admin",
-   "username": "admin",
-   "password": "admin"
+   "baseUrl":"http://localhost/litecart",
+   "username": "gorelov2895@yandex.ru",
+   "password": "12345"
  }
 }
