@@ -2,6 +2,7 @@ from fixture.admin import AdminHelper
 from fixture.session import SessionHelper
 from fixture.sticker import StickerHelper
 from selenium import webdriver
+from fixture.sorted import SortedHelper
 
 
 
@@ -21,6 +22,7 @@ class Application:
         self.session = SessionHelper(self)
         self.admin = AdminHelper(self)
         self.sticker = StickerHelper(self)
+        self.sorted = SortedHelper(self)
         self.base_url = base_url
 
 
