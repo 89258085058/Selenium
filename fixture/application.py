@@ -1,9 +1,9 @@
 from fixture.admin import AdminHelper
+from fixture.sorted import SortedHelper
 from fixture.session import SessionHelper
 from fixture.sticker import StickerHelper
+from fixture.product import ProductHelper
 from selenium import webdriver
-from fixture.sorted import SortedHelper
-
 
 
 class Application:
@@ -19,12 +19,12 @@ class Application:
         else:
             raise ValueError("Unrecognized browser %s" % browser)
         self.wd.implicitly_wait(5)
-        self.session = SessionHelper(self)
         self.admin = AdminHelper(self)
-        self.sticker = StickerHelper(self)
         self.sorted = SortedHelper(self)
+        self.sticker = StickerHelper(self)
+        self.product = ProductHelper(self)
+        self.session = SessionHelper(self)
         self.base_url = base_url
-
 
     def open_home_page(self):
         wd = self.wd
