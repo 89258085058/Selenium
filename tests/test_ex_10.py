@@ -30,19 +30,19 @@ def test_campaign_price_css_firefox(app):
     dict = app.product.get_css_properties_for_campaign_price_on_main_page()
     dict2 = app.product.get_css_properties_for_campaign_price_on_edit_page()
     assert dict["color"][1] == dict["color"][2] == dict2["color"][1] == dict2["color"][2] == '0'
-    assert dict["font_weight"] == '900'
-    assert dict2["font_weight"] == '700'
+    assert int(dict["font_weight"]) == 900
+    assert int(dict2["font_weight"]) == 700
 
 def test_campaign_price_css_ie(app):
     dict = app.product.get_css_properties_for_campaign_price_on_main_page()
     dict2 = app.product.get_css_properties_for_campaign_price_on_edit_page()
     assert dict["color"][1] == dict["color"][2] == dict2["color"][1] == dict2["color"][2] == '0'
-    assert dict["font_weight"] == '900'
-    assert dict2["font_weight"] == '900'
+    assert int(dict["font_weight"]) == 900
+    assert int(dict2["font_weight"]) == 900
 
 def test_campaign_price_css_chrome(app):
     dict = app.product.get_css_properties_for_campaign_price_on_main_page()
     dict2 = app.product.get_css_properties_for_campaign_price_on_edit_page()
     assert dict["color"][1] == dict["color"][2] == dict2["color"][1] == dict2["color"][2] == '0'
-    assert dict["font_weight"] == '700'
-    assert dict2["font_weight"] == '700'
+    assert int(dict["font_weight"]) == 700
+    assert int(dict2["font_weight"]) == 700
