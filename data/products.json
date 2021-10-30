@@ -1,0 +1,21 @@
+[
+  {
+    "py/object": "model.product.Product",
+    "id": null,
+    "name": "namexEw",
+    "code": "120",
+    "quantity": "242",
+    "date_valid_from": "2020-04-04",
+    "date_valid_to": "2021-04-04",
+    "manufacturer": "ACME Corp.",
+    "supplier": null,
+    "keywords": "keywordDY9eN7bpUo",
+    "short_description": "short_description",
+    "description": "long descriptionpRWwfY99ihzY0LP5aRxjJpXyAsSp0lOPYjXweaAxygmPY0TASodZS1aUqPAmXNimFtBvIpKQiaiFR9",
+    "head_title": "head titlebEUQZ6m8g",
+    "meta_description": "meta descriptionYZwBr7FZUriMvHkiVUCv66",
+    "price": "2",
+    "regular_price": null,
+    "campaign_price": null
+  }
+]

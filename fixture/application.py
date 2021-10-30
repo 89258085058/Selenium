@@ -1,3 +1,5 @@
+from selenium.webdriver.support.select import Select
+
 from fixture.admin import AdminHelper
 from fixture.sorted import SortedHelper
 from fixture.session import SessionHelper
@@ -57,3 +59,13 @@ class Application:
         wd = self.wd
         wait = WebDriverWait(wd, 10)
         return wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "%s" % locator)))
+
+    def fill_field_value(self, field_name, text):
+        wd = self.wd
+        wd.find_element_by_name(field_name).click()
+        wd.find_element_by_name(field_name).send_keys(text)
+
+    def select_by_text(self, field_name, text):
+        wd = self.wd
+        select = Select(wd.find_element_by_name(field_name))
+        select.select_by_visible_text(text)

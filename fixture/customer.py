@@ -11,6 +11,11 @@ class CustomerHelper:
         wd.find_element_by_name(field_name).click()
         wd.find_element_by_name(field_name).send_keys(text)
 
+    def fill_field_value_name(self, field_name, text):
+        wd = self.app.wd
+        wd.find_element_by_xpath(field_name).click()
+        wd.find_element_by_xpath(field_name).send_keys(text)
+
     def fill_account_form(self, customer):
         wd = self.app.wd
         self.app.wait_until_element_present("[name=tax_id]")
