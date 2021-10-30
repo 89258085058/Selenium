@@ -1,0 +1,21 @@
+[
+  {
+    "py/object": "model.customer.Customer",
+    "id": null,
+    "tax_id": "9",
+    "company": "companyPdQa",
+    "firstname": "firstnameDCSfi4Tw0Uc",
+    "lastname": "lastname",
+    "address1": "addresss12l",
+    "address2": "addresss2mCit7JRhvW6XzY",
+    "postcode": "12345",
+    "city": "city5t25z1W",
+    "country": "United States",
+    "zone_code": "Arizona",
+    "email": "e8KJe49ar8PjeB@gmail.com",
+    "phone": "15",
+    "newsletter": null,
+    "password": "password",
+    "confirmed_password": "password"
+  }
+]
