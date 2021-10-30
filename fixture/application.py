@@ -1,11 +1,12 @@
 from selenium.webdriver.support.select import Select
-
+from fixture.cart import CartHelper
 from fixture.admin import AdminHelper
 from fixture.sorted import SortedHelper
 from fixture.session import SessionHelper
 from fixture.sticker import StickerHelper
 from fixture.product import ProductHelper
 from fixture.customer import CustomerHelper
+from fixture.main import MainHelper
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support.wait import WebDriverWait
@@ -29,9 +30,11 @@ class Application:
         self.admin = AdminHelper(self)
         self.sorted = SortedHelper(self)
         self.sticker = StickerHelper(self)
+        self.main = MainHelper(self)
         self.product = ProductHelper(self)
         self.session = SessionHelper(self)
         self.customer = CustomerHelper(self)
+        self.cart = CartHelper(self)
         self.base_url = base_url
 
     def open_admin_page(self):
@@ -58,7 +61,7 @@ class Application:
     def wait_until_element_present(self, locator):
         wd = self.wd
         wait = WebDriverWait(wd, 10)
-        return wait.until(EC.presence_of_element_located((By.CSS_SELECTOR, "%s" % locator)))
+        return wait.until(EC.presence_of_element_located((By.NAME, "%s" % locator)))
 
     def fill_field_value(self, field_name, text):
         wd = self.wd
@@ -69,3 +72,15 @@ class Application:
         wd = self.wd
         select = Select(wd.find_element_by_name(field_name))
         select.select_by_visible_text(text)
+
+
+    def wait_until_text_to_be_present_in_element(self, locator, text):
+        wd = self.wd
+        wait = WebDriverWait(wd, 10)
+        return wait.until(EC.text_to_be_present_in_element(locator, text))
+
+    def wait_until_staleness_of_element(self, element):
+        wd = self.wd
+        wait = WebDriverWait(wd, 10)
+        return wait.until(EC.staleness_of(element))
+
