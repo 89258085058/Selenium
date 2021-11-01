@@ -17,14 +17,14 @@ def test_compare_font_sizes_on_main_page(app):
     dict2 = app.product.get_css_properties_for_campaign_price_on_main_page()
     font_size_regular_price = dict["font_size"]
     font_size_campaign_price = dict2["font_size"]
-    assert font_size_regular_price < font_size_campaign_price
+    assert float(font_size_regular_price) < float(font_size_campaign_price)
 
 def test_compare_font_sizes_on_edit_page(app):
     dict = app.product.get_css_properties_for_regular_price_on_edit_page()
     dict2 = app.product.get_css_properties_for_campaign_price_on_edit_page()
     font_size_regular_price = dict["font_size"]
     font_size_campaign_price = dict2["font_size"]
-    assert font_size_regular_price < font_size_campaign_price
+    assert float(font_size_regular_price) < float(font_size_campaign_price)
 
 def test_campaign_price_css_firefox(app):
     dict = app.product.get_css_properties_for_campaign_price_on_main_page()
