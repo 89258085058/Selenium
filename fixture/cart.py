@@ -1,7 +1,10 @@
-from selenium.webdriver.support.wait import WebDriverWait
+from model.productchoice import ProductChoice
+from random import randrange
+from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import Select
-from fixture.custom_wait import number_of_elements
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as ec
 
 
 class CartHelper:
@@ -9,31 +12,63 @@ class CartHelper:
     def __init__(self, app):
         self.app = app
 
-    def add_item(self):
+    def go_to_main_page(self):
         wd = self.app.wd
-        products = self.app.main.list_of_products()
-        products[0].click()
-        self.app.wait_until_element_present("add_cart_product")
-        wd.find_element_by_css_selector("[name=add_cart_product]").click()
+        if not (wd.current_url == "http://localhost/litecart/en/"):
+            wd.get("http://localhost/litecart/en/")
 
-    def check_quantity(self, quantity):
-        self.app.wait_until_text_to_be_present_in_element((By.CSS_SELECTOR, "span.quantity"), quantity)
-
-    def checkout(self):
+    def get_product_list(self):
         wd = self.app.wd
-        wd.find_element_by_css_selector("#cart a.link").click()
+        self.go_to_main_page()
+        products = []
+        pr_list = wd.find_elements_by_css_selector("#box-most-popular .product")
+        for pr in pr_list:
+            name = pr.find_element_by_class_name("name").text
+            link = pr.find_element_by_class_name("link").get_attribute("href")
+            products.append(ProductChoice(name=name, link=link))
+        return products
 
-    def remove_item(self):
+    def add_item_to_cart(self, product_list, q):
         wd = self.app.wd
-        wd.find_elements_by_css_selector("[value=Remove]")[0].click()
+        index = randrange(len(product_list))
+        wd.get(product_list[index].link)
+        cart_quantity = wd.find_element_by_css_selector("#cart .quantity")
+        old_quantity = cart_quantity.text
+        if is_element_present(wd, By.NAME, "options[Size]"):
+            Select(wd.find_element_by_name("options[Size]")).select_by_value('Small')
+        self.fill_field_value("quantity", q)
+        wd.find_element_by_name("add_cart_product").click()
+        new_quantity = str(int(old_quantity) + q)
+        wait = WebDriverWait(wd, 5)
+        wait.until(ec.text_to_be_present_in_element((By.CSS_SELECTOR, "#cart .quantity"), new_quantity))
 
-    def add_and_remove_items(self, number):
+    def del_items_from_cart(self):
         wd = self.app.wd
-        wait = WebDriverWait(wd, 10)
-        for i in range(1, number):
-            self.add_item()
-            self.check_quantity('%s' % i)
-        self.checkout()
-        for i in range(1, number):
-            self.remove_item()
-            wait.until(number_of_elements((By.CSS_SELECTOR, "#checkout-summary-wrapper tr"), 8 - i))
+        self.go_to_cart_page()
+        item_list = wd.find_elements_by_css_selector("[name='cart_form']")
+        for item in range(len(item_list)):
+            table = wd.find_element_by_css_selector(".dataTable")
+            wd.find_element_by_css_selector("[name='cart_form']").find_element_by_name("remove_cart_item").click()
+            wait = WebDriverWait(wd, 5)
+            wait.until(ec.staleness_of(table))
+        assert wd.find_element_by_css_selector("#checkout-cart-wrapper em").text == "There are no items in your cart."
+
+    def go_to_cart_page(self):
+        wd = self.app.wd
+        if not (wd.current_url == "http://localhost/litecart/en/checkout"):
+            wd.find_element_by_link_text("Checkout »").click()
+
+    def fill_field_value(self, field_name, text):
+        wd = self.app.wd
+        if text is not None:
+            wd.find_element_by_name(field_name).click()
+            wd.find_element_by_name(field_name).clear()
+            wd.find_element_by_name(field_name).send_keys(text)
+
+
+def is_element_present(driver, *args):
+    try:
+        driver.find_element(*args)
+        return True
+    except NoSuchElementException:
+        return False
