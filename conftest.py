@@ -27,7 +27,7 @@ def app(request):
     web_config = load_config(request.config.getoption("--target"))['web']
     if fixture is None or not fixture.is_valid():
         fixture = Application(browser=browser, base_url=web_config["baseUrl"])
-    fixture.session.login(username=web_config["username"], password=web_config["password"])
+    fixture.session.login_on_admin_page(username=web_config["username"], password=web_config["password"])
     return fixture
 
 
@@ -60,5 +60,6 @@ def load_from_module(module):
 def load_from_json(file):
     with open(os.path.join(os.path.dirname(__file__), "data/%s.json" % file)) as f:
         return jsonpickle.decode(f.read())
+
 
 

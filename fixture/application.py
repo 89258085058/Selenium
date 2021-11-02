@@ -6,6 +6,7 @@ from fixture.session import SessionHelper
 from fixture.sticker import StickerHelper
 from fixture.product import ProductHelper
 from fixture.customer import CustomerHelper
+from fixture.window import WindowHelper
 from fixture.main import MainHelper
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
@@ -35,6 +36,7 @@ class Application:
         self.session = SessionHelper(self)
         self.customer = CustomerHelper(self)
         self.cart = CartHelper(self)
+        self.window = WindowHelper(self)
         self.base_url = base_url
 
     def open_admin_page(self):
