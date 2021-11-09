@@ -1,3 +1,4 @@
+import allure
 from selenium.webdriver.support.select import Select
 from fixture.cart import CartHelper
 from fixture.admin import AdminHelper
@@ -9,10 +10,12 @@ from fixture.customer import CustomerHelper
 from fixture.window import WindowHelper
 from fixture.main import MainHelper
 from selenium import webdriver
+from fixture.log import LogHelper
 from selenium.common.exceptions import NoSuchElementException
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from allure_commons.types import AttachmentType
 
 
 class Application:
@@ -27,7 +30,7 @@ class Application:
             self.wd = webdriver.Ie()
         else:
             raise ValueError("Unrecognized browser %s" % browser)
-        self.wd.implicitly_wait(5)
+        self.wd.implicitly_wait(3)
         self.admin = AdminHelper(self)
         self.sorted = SortedHelper(self)
         self.sticker = StickerHelper(self)
@@ -37,6 +40,7 @@ class Application:
         self.customer = CustomerHelper(self)
         self.cart = CartHelper(self)
         self.window = WindowHelper(self)
+        self.log = LogHelper(self)
         self.base_url = base_url
 
     def open_admin_page(self):
@@ -57,8 +61,12 @@ class Application:
         except NoSuchElementException:
             return False
 
+
     def destroy(self):
+        allure.attach(self.wd.get_screenshot_as_png(), name="Screenshot", attachment_type=AttachmentType.PNG)
         self.wd.quit()
+
+
 
     def wait_until_element_present(self, locator):
         wd = self.wd
@@ -85,4 +93,9 @@ class Application:
         wd = self.wd
         wait = WebDriverWait(wd, 10)
         return wait.until(EC.staleness_of(element))
+
+
+
+
+
 
