@@ -16,6 +16,9 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from allure_commons.types import AttachmentType
+from page.CartPage import CartPageHelper
+from page.ProductPage import ProductPageHelper
+from page.MainPage import MainPageHelper
 
 
 class Application:
@@ -41,6 +44,9 @@ class Application:
         self.cart = CartHelper(self)
         self.window = WindowHelper(self)
         self.log = LogHelper(self)
+        self.CartPage = CartPageHelper(self)
+        self.ProductPage = ProductPageHelper(self)
+        self.MainPage = MainPageHelper(self)
         self.base_url = base_url
 
     def open_admin_page(self):

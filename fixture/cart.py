@@ -65,6 +65,20 @@ class CartHelper:
             wd.find_element_by_name(field_name).clear()
             wd.find_element_by_name(field_name).send_keys(text)
 
+    def add_to_cart_random_product(self):
+        self.app.MainPage.open_random_product_page()
+        self.app.ProductPage.select_size_if_needed()
+        self.app.ProductPage.add_product_to_cart()
+
+    def delete_all_products_from_cart(self):
+        self.app.MainPage.open_start_page()
+        self.app.MainPage.open_cart_page()
+        self.app.CartPage.delete_all_products_from_cart()
+
+    def are_elements_present(self, driver, *args):
+        return len(driver.find_elements(*args)) > 0
+
+
 
 def is_element_present(driver, *args):
     try:
@@ -72,3 +86,6 @@ def is_element_present(driver, *args):
         return True
     except NoSuchElementException:
         return False
+
+
+
